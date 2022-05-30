@@ -1,0 +1,28 @@
+nosex=0
+nosey=0
+leftwristx=0
+rightwristx=0
+diffrence=0
+function preload(){}
+function setup(){
+    canvas=createCanvas(400,400);
+    canvas.center();
+    video=createCapture(VIDEO);
+    video.size(400,400);
+    posenet=ml5.poseNet(video,modelloaded);
+    posenet.on('pose',gotposes);
+}
+function modelloaded(){
+    console.log("Model Loaded");
+}
+function gotposes(results){
+    if(results.length>0){
+        console.log(results);
+        nosex=results[0].pose.nose.x;
+        nosey=results[0].pose.nose.y;
+        leftwristx=results[0].pose.leftwrist.x;
+        rightwristx=results[0].pose.rightwrist.x;
+        diffrence=floor(leftwristx-rightwristx)
+    }
+}
+
